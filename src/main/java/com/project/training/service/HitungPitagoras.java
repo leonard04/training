@@ -11,6 +11,6 @@ public class HitungPitagoras implements ICounter<NormalInputClass,Double> {
 
     @Override
     public Double count(NormalInputClass input) {
-        return Math.sqrt((input.getB() * input.getB()) + (input.getA() * input.getA()));
+        return Math.sqrt(Math.pow(input.getB2()-input.getB1(),2) + Math.pow(input.getA2()-input.getA1(),2));
     }
 }

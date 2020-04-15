@@ -1,7 +1,6 @@
 package com.project.training.controller;
 
-import com.project.training.dto.NormalInputClass;
-import com.project.training.dto.ResultDto;
+import com.project.training.dto.*;
 import com.project.training.service.ICounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,15 +16,15 @@ public class CountController {
 
     @Autowired
     @Qualifier("HLSegitiga")
-    private ICounter<NormalInputClass,Double> segitiga;
+    private ICounter<SegitigaInputClass,Double> segitiga;
 
     @Autowired
     @Qualifier("HLPersegi")
-    private ICounter<NormalInputClass,Double> persegi;
+    private ICounter<PersegiInputClass,Double> persegi;
 
     @Autowired
     @Qualifier("HLLingkaran")
-    private ICounter<NormalInputClass,Double> lingkaran;
+    private ICounter<LingkaranInputClass,Double> lingkaran;
 
     @PostMapping("/euDistance")
     public ResponseEntity<ResultDto> getEuDistance(@RequestBody NormalInputClass input){
@@ -36,29 +35,29 @@ public class CountController {
         return ResponseEntity.ok().body(resultDto);
     }
     @PostMapping("/luasSegitiga")
-    public ResponseEntity<ResultDto> getLuasSegitiga(@RequestBody NormalInputClass input){
+    public ResponseEntity<ResultDtoSegitiga> getLuasSegitiga(@RequestBody SegitigaInputClass input){
 
         Double res = segitiga.count(input);
-        ResultDto resultDto =new ResultDto(input,res);
+        ResultDtoSegitiga resultDto =new ResultDtoSegitiga(input,res);
 
         return ResponseEntity.ok().body(resultDto);
     }
 
-    @GetMapping("/luasPersegi/{a}")
-    public ResponseEntity<ResultDto> getLuasPersegi(@PathVariable("a") Double a){
-        NormalInputClass input = new NormalInputClass();
-        input.setA(a);
+    @GetMapping("/luasPersegi/{sisi}")
+    public ResponseEntity<ResultDtoPersegi> getLuasPersegi(@PathVariable("sisi") Double sisi){
+        PersegiInputClass input = new PersegiInputClass();
+        input.setSisi(sisi);
         Double res = persegi.count(input);
-        ResultDto resultDto = new ResultDto(input,res);
+        ResultDtoPersegi resultDto = new ResultDtoPersegi(input,res);
         return ResponseEntity.ok().body(resultDto);
     }
 
-    @GetMapping("/luasLingkaran/{a}")
-    public ResponseEntity<ResultDto> getLuasLingkaran(@PathVariable("a") Double a){
-        NormalInputClass input = new NormalInputClass();
-        input.setA(a);
+    @GetMapping("/luasLingkaran/{jarijari}")
+    public ResponseEntity<ResultDtoLingkaran> getLuasLingkaran(@PathVariable("jarijari") Double jarijari){
+        LingkaranInputClass input = new LingkaranInputClass();
+        input.setJarijari(jarijari);
         Double res = lingkaran.count(input);
-        ResultDto resultDto = new ResultDto(input,res);
+        ResultDtoLingkaran resultDto = new ResultDtoLingkaran(input,res);
         return ResponseEntity.ok().body(resultDto);
     }
 }
